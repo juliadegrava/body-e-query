@@ -1,0 +1,18 @@
+{
+  "name": "body-query",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "keywords": ["SENAI", "API", "NodeJS"],
+  "author": "Degrava",
+  "license": "MIT",
+  "description": "Projeto de API com filtro query e body",
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
