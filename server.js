@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 // Importar Lista de Array
 import dados from "./src/data/dados.js";
-const { bruxos, varinhas, pocoes } = dados;
+const { bruxos, varinhas, pocoes, animais } = dados;
 
 // Criar aplicação com Express e configurar para aceitar JSON
 const app = express();
@@ -135,7 +135,56 @@ app.get("/pocoes", (req, res) => {
       });
     });
 
-    
+// Rota para animais
+ app.get("/animais", (req, res) => {
+    const { tipo, nome } = req.query;
+    let resultado = animais;
+
+    if (tipo) {
+        resultado = resultado.filter((a) => 
+            a.tipo.toLowerCase().includes(tipo.toLowerCase())
+        );
+    }
+    if (nome) {
+        resultado = resultado.filter((a) => 
+            a.nome.toLowerCase().includes(nome.toLowerCase())
+        );
+    }
+
+    res.status(200).json({
+        total: resultado.length,
+        data: resultado,
+      });
+    });   
+
+
+app.post("/varinhas", (req, res) => {
+  const { material, nucleo, comprimento } =
+    req.body;
+
+  if (!material || !comprimento || !nucleo) {
+    return res.status(400).json({
+      sucess: false,
+      message: "Material e comprimento são obrigatórios para um bruxo!",
+    });
+  }
+
+  const novaVarinha = {
+    id: varinhas.length + 1,
+    material,
+    nucleo,
+    comprimento
+  };
+
+  varinhas.push(novaVarinha);
+
+  res.status(201).json({
+    sucess: true,
+    message: "Nova varinha adicionada a Hogwarts!",
+    data: novaVarinha,
+  });
+});
+
 app.listen(serverPort, () => {
   console.log(`🚀 Servidor rodando em http://localhost:${serverPort} 🚀`);
 });
